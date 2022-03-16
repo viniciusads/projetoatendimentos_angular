@@ -1,0 +1,53 @@
+<h5>Consulta de Atendimentos Médicos</h5>
+<p>Listagem de atendimentos realizados:</p>
+<hr>
+ 
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th>Data e Hora</th>
+            <th>Dados do Médico</th>
+            <th>Dados do Paciente</th>
+            <th>Receitas Médicas</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let a of atendimentos">
+            <td>
+                Data: {{a.dataHora | date : 'dd/MM/yyyy'}} <br/>
+                Hora: {{a.dataHora | date : 'HH:mm'}}
+            </td>
+            <td>
+                {{a.medico.nome | uppercase}} <br/>
+                CRM: {{a.medico.crm}} <br/>
+                Telefone: {{a.medico.telefone}} <br/>
+                Tipo: {{a.medico.tipo}}
+            </td>
+            <td>
+                {{a.paciente.nome | uppercase}} <br/>
+                CPF: {{a.paciente.cpf}} <br/>
+                Data Nasc: {{a.paciente.dataNascimento | date : 'dd/MM/yyyy'}} <br/>
+                Sexo: {{a.paciente.sexo == 'M' ? 'Masculino' : 'Feminino'}}
+            </td>
+            <td>
+                <div *ngFor="let r of a.receitas" class="mb-2">
+                    Medicamento: {{r.medicamento}} <br/>
+                    Prescrição: {{r.prescricao}}
+                </div>
+                <div *ngIf="a.receitas.length == 0">
+                    Não há receita para este atendimento.
+                </div>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                Quantidade de atendimentos: {{atendimentos.length}}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+ 
+
+

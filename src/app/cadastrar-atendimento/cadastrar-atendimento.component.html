@@ -1,0 +1,94 @@
+<h5>Cadastro de Atendimentos Médicos</h5>
+<p>Preencha o formulário para realizar um atendimento.</p>
+<hr/>
+ 
+<div *ngIf="mensagem" class="alert alert-primary">
+    <strong>{{mensagem}}</strong>
+</div>
+ 
+<form [formGroup]="formCadastro" (ngSubmit)="onSubmit()">
+ 
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label>Data e Hora:</label>
+            <input type="datetime-local" class="form-control" formControlName="dataHora"/>
+            <div class="text-danger" *ngIf="form.dataHora.touched && form.dataHora.invalid">
+                <span *ngIf="form.dataHora.errors.required">
+                    Por favor, informe a data e hora do atendimento.
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label>Selecione o paciente:</label>
+            <select class="form-select" formControlName="idPaciente">
+                <option value="">Escolha uma opção</option>
+                <option *ngFor="let p of pacientes" value="{{p.idPaciente}}">
+                    {{p.nome | uppercase}} (CPF: {{p.cpf}})
+                </option>
+            </select>
+            <div class="text-danger" *ngIf="form.idPaciente.touched && form.idPaciente.invalid">
+                <span *ngIf="form.idPaciente.errors.required">
+                    Por favor, selecione o paciente.
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label>Selecione o médico:</label>
+            <select class="form-select" formControlName="idMedico">
+                <option value="">Escolha uma opção</option>
+                <option *ngFor="let m of medicos" value="{{m.idMedico}}">
+                    {{m.nome | uppercase}} ({{m.tipo}})
+                </option>
+            </select>
+            <div class="text-danger" *ngIf="form.idMedico.touched && form.idMedico.invalid">
+                <span *ngIf="form.idMedico.errors.required">
+                    Por favor, selecione o médico.
+                </span>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="mb-3">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>Dados da Receita médica:</strong>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <label>Nome do Medicamento:</label>
+                <input type="text" class="form-control" formControlName="medicamento"/>
+                <div class="text-danger" *ngIf="form.medicamento.touched && form.medicamento.invalid">
+                    <span *ngIf="form.medicamento.errors.required">
+                        Por favor, informe o medicamento.
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <label>Prescrição médica:</label>
+                <textarea class="form-control" formControlName="prescricao"></textarea>
+                <div class="text-danger" *ngIf="form.prescricao.touched && form.prescricao.invalid">
+                    <span *ngIf="form.prescricao.errors.required">
+                        Por favor, informe a prescrição.
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="mb-3">
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" value="Realizar Cadastro"
+                    [disabled]="!formCadastro.valid"
+                    class="btn btn-success"/>
+            </div>
+        </div>
+    </div>
+ 
+</form>
+
+
